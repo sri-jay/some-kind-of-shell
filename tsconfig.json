@@ -1,0 +1,8 @@
+{
+  "files": [
+    "./process/shell.ts",
+    "./process/process.ts",
+    "./process/message/message.ts",
+    "./app/app.ts"
+  ]
+}

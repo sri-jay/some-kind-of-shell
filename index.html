@@ -1,0 +1,75 @@
+<html ng-app="shell">
+  <head>
+    <link rel="stylesheet" href="semantic/semantic.min.css" />
+    <script type="text/javascript" src="jquery/jquery-2.1.4.js"></script>
+    <script type="text/javascript" src="semantic/semantic.min.js"></script>
+    <script src="process/process.js"></script>
+    <script src="process/shell.js"></script>
+    <script src="process/message/message.js"></script>
+    <script src="app/app.js"></script>
+    <style>
+      body {
+        width: 98%;
+        margin-left: 1%;
+        font-family: "consolas";
+      }
+
+      code {
+        font-family: "consolas"
+      }
+
+      .stderr {
+        background-color: #DB2828!important;
+      }
+    </style>
+  </head>
+  <body ng-controller="MainController">
+    <div class="ui small feed">
+      <div class="event" ng-repeat="process in runner.queue track by $index">
+        <div class="content">
+          <div class="ui segments">
+            <div class="ui inverted segment">
+              {{$index + 1}}
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <code>{{process.command}} {{process.args.join(' ')}}</code>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <code ng-bind="process.directory"></code>
+              <button class="ui mini right floated yellow button" ng-click="process.viewTerm = !process.viewTerm">View</button>
+            </div>
+            <div class="ui segment" ng-if="process.viewTerm == true">
+              <p ng-repeat="op in process.outputs track by $index">
+                <code>
+                  {{op.message}}
+                </code>
+              </p>
+              <form ng-class="ui fluid form" ng-submit="process.write(process.userInput)" ng-if="process.processState === 1">
+                <div class="fluid inline field">
+                  <button style="display: none" type="submit"></button>
+                  <div class="ui orange right pointing label">
+                    {{process.command}} {{process.args.join(' ')}}
+                  </div>
+                  <div class="ui transparent input">
+                    <button style="display: none" type="submit"></button>
+                    <input style="font-family: consolas" type="text" ng-model="process.userInput">
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <form class="ui fluid form" ng-submit="addTaskToQueue()">
+      <div class="fluid inline field">
+        <button style="display: none" type="submit"></button>
+        <div class="ui green right pointing label">
+          {{cwd}}
+        </div>
+        <div class="ui transparent input">
+          <button style="display: none" type="submit"></button>
+          <input style="font-family: consolas" type="text" ng-model="args">
+        </div>
+      </div>
+    </form>
+  </body>
+</html>
