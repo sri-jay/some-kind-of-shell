@@ -4,5 +4,6 @@
     "./process/process.ts",
     "./process/message/message.ts",
     "./app/app.ts"
-  ]
+  ],
+  "outDir": "out/"
 }
