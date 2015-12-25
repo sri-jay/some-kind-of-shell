@@ -27,7 +27,7 @@ class Process implements IProcess {
   processState: ProcessState = ProcessState.INIT;
   exitCallback: Function;
   directory: string = process.cwd();
-  
+
   constructor(command: string, args: string[], exitCallback?: Function) {
     this.command = command;
     this.args = args;
